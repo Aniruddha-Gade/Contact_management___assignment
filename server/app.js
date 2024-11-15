@@ -4,7 +4,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 dotenv.config();
-
+import contactRouter from './routes/contact.route.js'
 
 export const app = express();
 
@@ -17,6 +17,11 @@ app.use(
         credentials: true
     })
 );
+
+
+
+// mount routes
+app.use('/api/v1/contact', contactRouter);
 
 
 
@@ -41,8 +46,8 @@ app.get('/', (req, res) => {
 // unknown route
 app.all('*', (req, res, next) => {
     res.status(404).json({
-        message:`Route ${req.originalUrl} not found`,
-        status:404
+        message: `Route ${req.originalUrl} not found`,
+        status: 404
     })
 })
 

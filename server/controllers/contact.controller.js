@@ -1,6 +1,6 @@
 
 
-import ContactModel from "../models/contact.model"
+import ContactModel from '../models/contact.model.js';
 
 
 
@@ -13,14 +13,14 @@ export const createContact = async (req, res) => {
 
         // validate data
         if (!firstName || !lastName || !email || !phoneNumber || !company || !jobTitle) {
-            res.status(400).json({
+            return res.status(400).json({
                 message: "firstName, lastName, email, phoneNumber, company, jobTitle all fields are required",
             });
         }
 
         // save in DB
         const contact = await ContactModel.create({
-            firstName, lastName, email, phoneNumber, 
+            firstName, lastName, email, phoneNumber,
             company, jobTitle, createdAt: Date.now()
         });
 
