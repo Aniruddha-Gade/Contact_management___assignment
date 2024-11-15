@@ -37,3 +37,26 @@ export const createContact = async (req, res) => {
         });
     }
 };
+
+
+
+// ========================= GET ALL CONTACTS ========================= 
+export const getAllContacts = async (req, res) => {
+    try {
+        // find all contacts
+        const contacts = await ContactModel.find({
+        }).sort({ createdAt: -1 })
+
+        // return success message
+        res.status(201).json({
+            message: "All Contacts fetched successfully",
+            contacts
+        });
+    } catch (error) {
+        console.log("Error while fetching all contacts => ", error)
+        res.status(500).json({
+            message: 'Error while fetching all contacts',
+            error: error.message
+        });
+    }
+};
