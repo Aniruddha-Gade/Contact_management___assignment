@@ -2,6 +2,10 @@
 import mongoose from 'mongoose'
 
 
+const emailRegexPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+
 const contactSchema = new mongoose.Schema({
     firstName: {
         type: String,
@@ -14,7 +18,13 @@ const contactSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        validate: {
+            validator: function (value) {
+                return emailRegexPattern.test(value);
+            },
+            message: "Please enter a valid email"
+        },
     },
     phoneNumber: {
         type: String,
@@ -36,4 +46,5 @@ const contactSchema = new mongoose.Schema({
 
 
 
-module.exports = mongoose.model('Contact', contactSchema);
+const ContactModel = mongoose.model('Contact', contactSchema);
+export default ContactModel;
