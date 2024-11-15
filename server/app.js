@@ -1,0 +1,48 @@
+
+
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+dotenv.config();
+
+
+export const app = express();
+
+// middleware 
+app.use(express.json()); // to parse json body
+// cors => cors
+app.use(
+    cors({
+        origin: ["http://localhost:3000"],
+        credentials: true
+    })
+);
+
+
+
+app.use((err, req, res, next) => {
+    console.error("err.message => ", err.message);
+    res.status(500).json({ error: 'Server error' });
+});
+
+
+
+
+// Default Route
+app.get('/', (req, res) => {
+    // console.log('Your server is up and running..!');
+    res.send(`<div>
+    This is Default Route of Contact Management  
+    <p>Everything is OK</p>
+    </div>`);
+})
+
+
+// unknown route
+app.all('*', (req, res, next) => {
+    res.status(404).json({
+        message:`Route ${req.originalUrl} not found`,
+        status:404
+    })
+})
+
