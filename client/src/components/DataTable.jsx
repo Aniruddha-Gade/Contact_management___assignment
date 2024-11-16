@@ -42,6 +42,9 @@ function EnhancedTableHead(props) {
             inputProps={{ 'aria-label': 'select all rows' }}
           />
         </TableCell>
+        <TableCell>Edit</TableCell>
+        <TableCell>Delete</TableCell>
+        
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
