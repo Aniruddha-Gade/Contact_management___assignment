@@ -13,8 +13,14 @@ import Paper from '@mui/material/Paper';
 import Checkbox from '@mui/material/Checkbox';
 import { visuallyHidden } from '@mui/utils';
 import EditIcon from '@mui/icons-material/Edit';
-import { Button } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { Button, Dialog, DialogContent, DialogTitle, Grid2 } from '@mui/material';
 import ContactFormDialog from './ContactFormDialog';
+import DoDisturbAltIcon from '@mui/icons-material/DoDisturbAlt';
+import { apiConnector } from '../services/apiConnector';
+import { ContactEndpoints } from '../services/api';
+import { toast } from 'sonner';
+
 
 
 function EnhancedTableHead(props) {
@@ -81,7 +87,25 @@ export default function DataTable({ rows, headCells }) {
   const [isDialogOpen, setIsDialogOpen] = React.useState(false);
   const handleDialogClose = () => setIsDialogOpen(false);
   const [selectedIndex, setSelectedIndex] = React.useState(null)
+  const [openDeleteDialog, setOpenDeleteDialog] = React.useState(false)
+  const { DELETE_CONTACT_API } = ContactEndpoints
+  const [loading, setLoading] = React.useState(false)
 
+
+  // handle Contact Delete
+  const handleContactDelete = async () => {
+    setLoading(true)
+    const id = rows[selectedIndex]?.id
+    const response = await apiConnector("DELETE", `${DELETE_CONTACT_API}/${id}`);
+    console.log("DELETE_CONTACT API RESPONSE............", response)
+    if (response?.data?.success) {
+      toast.success("Contact deleted Succesfully")
+    } else {
+      toast.error(response.data?.message)
+    }
+    setOpenDeleteDialog(false)
+    setLoading(false)
+  }
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -138,6 +162,8 @@ export default function DataTable({ rows, headCells }) {
     [rows, order, orderBy, page, rowsPerPage]
   );
 
+
+
   return (
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
@@ -185,6 +211,16 @@ export default function DataTable({ rows, headCells }) {
                         <EditIcon />
                       </Button>
                     </TableCell>
+                    {/* delete button */}
+                    <TableCell padding="checkbox">
+                      <Button onClick={() => {
+                        setSelectedIndex(index)
+                        setOpenDeleteDialog(true)
+                      }}
+                      >
+                        <DeleteIcon />
+                      </Button>
+                    </TableCell>
 
                     {headCells.map((headCell) => (
                       <TableCell key={headCell.id} align={headCell.numeric ? 'right' : 'left'}>
@@ -221,6 +257,36 @@ export default function DataTable({ rows, headCells }) {
           onClose={handleDialogClose}
           initialValues={rows[selectedIndex]}
         />
+      }
+
+
+      {
+        openDeleteDialog && (
+          <Dialog open={openDeleteDialog} onClose={() => setOpenDeleteDialog(false)} fullWidth>
+            <DialogTitle>Are you sure to Delete this contact ?</DialogTitle>
+            <DialogContent style={{ padding: "20px" }}>
+              <Grid2 container spacing={2}>
+                <Button
+                  onClick={() => setOpenDeleteDialog(false)}
+                  disabled={loading}
+                  variant="contained" color="success" endIcon={<DoDisturbAltIcon />}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  onClick={handleContactDelete}
+                  disabled={loading}
+                  variant="contained" color="error" endIcon={<DeleteIcon />}
+                >
+                  {loading ? 'Deleting' : 'Delete'}
+                </Button>
+              </Grid2>
+
+
+
+            </DialogContent>
+          </Dialog>
+        )
       }
     </Box>
   );

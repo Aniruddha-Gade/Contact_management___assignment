@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField, } from "@mui/material";
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField, Grid2 } from "@mui/material";
 import SendIcon from '@mui/icons-material/Send';
-import Grid from '@mui/material/Grid2';
 import { apiConnector } from "../services/apiConnector";
 import { ContactEndpoints } from "../services/api";
 import { toast } from "sonner";
@@ -28,22 +27,25 @@ const ContactFormDialog = ({ open, onClose, initialValues = null }) => {
       setLoading(true)
       const response = await apiConnector(
         "PUT",
-        `${UPDATE_CONTACT_API}/${formValues?.id}`, 
+        `${UPDATE_CONTACT_API}/${formValues?.id}`,
         formValues,
       );
 
       setLoading(false)
       console.log("UPDATE_CONTACT API RESPONSE............", response)
       if (response?.data?.success) {
-        toast.success("Conatact updated Succesfully")
+        toast.success("Contact updated Succesfully")
         onClose()
+      }
+      else {
+        toast.error(response.data?.message)
       }
     } else {
       // create new contact
       setLoading(true)
       const response = await apiConnector("POST", CREATE_NEW_CONTACT_API, formValues)
       setLoading(false)
-      
+
       console.log("CREATE_NEW_CONTACT API RESPONSE............", response)
       if (response?.data?.success) {
         toast.success("New Conatact Added Succesfully")
@@ -61,8 +63,8 @@ const ContactFormDialog = ({ open, onClose, initialValues = null }) => {
       <DialogTitle >{initialValues ? "Edit Contact" : "Add New Contact"}</DialogTitle>
 
       <DialogContent style={{ padding: "20px" }}>
-        <Grid container spacing={2}>
-          <Grid item xs={12} sm={6}>
+        <Grid2 container spacing={2}>
+          <Grid2 item xs={12} sm={6}>
             <TextField
               required
               label="First Name"
@@ -71,8 +73,8 @@ const ContactFormDialog = ({ open, onClose, initialValues = null }) => {
               onChange={handleFormChange}
               fullWidth
             />
-          </Grid>
-          <Grid item xs={12} sm={6}>
+          </Grid2>
+          <Grid2 item xs={12} sm={6}>
             <TextField
               label="Last Name"
               name="lastName"
@@ -80,7 +82,7 @@ const ContactFormDialog = ({ open, onClose, initialValues = null }) => {
               onChange={handleFormChange}
               fullWidth
             />
-          </Grid>
+          </Grid2>
           <TextField
             label="Email"
             name="email"
@@ -112,7 +114,7 @@ const ContactFormDialog = ({ open, onClose, initialValues = null }) => {
             onChange={handleFormChange}
             fullWidth
           />
-        </Grid>
+        </Grid2>
       </DialogContent>
 
       <DialogActions>
