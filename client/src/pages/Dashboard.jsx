@@ -2,9 +2,10 @@ import { useEffect, useState } from "react"
 import { ContactEndpoints } from "../services/api"
 import { apiConnector } from "../services/apiConnector"
 import DataTable from "../components/DataTable"
-import { Skeleton } from "@mui/material"
 import SkeletonTable from "../components/loader/SkeletonTable"
-
+import { Button } from "@mui/material"
+import AddIcon from '@mui/icons-material/Add';
+import ContactFormDialog from "../components/ContactFormDialog"
 
 
 const Dashboard = () => {
@@ -12,6 +13,17 @@ const Dashboard = () => {
     const { GET_ALL_CONTACTS_API, } = ContactEndpoints
     const [allContacts, setAllContacts] = useState([])
     const [loading, setLoading] = useState(false)
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+    const handleDialogOpen = () => setIsDialogOpen(true);
+    const handleDialogClose = () => setIsDialogOpen(false);
+
+    const handleFormSubmit = (newContact) => {
+        console.log("New Contact:", newContact);
+
+        setIsDialogOpen(false);
+    };
+
 
 
     const headCells = [
@@ -26,13 +38,13 @@ const Dashboard = () => {
 
 
     const rows = allContacts?.map((contact) => ({
-        id: contact._id,
-        firstName: contact.firstName,
-        lastName: contact.lastName,
-        email: contact.email,
-        phoneNumber: contact.phoneNumber,
-        company: contact.company,
-        jobTitle: contact.jobTitle,
+        id: contact?._id,
+        firstName: contact?.firstName,
+        lastName: contact?.lastName,
+        email: contact?.email,
+        phoneNumber: contact?.phoneNumber,
+        company: contact?.company,
+        jobTitle: contact?.jobTitle,
     }));
 
 
@@ -60,16 +72,39 @@ const Dashboard = () => {
 
 
     return (
-        <div className="w-full h-full p-5">
+        <div className="w-full h-full p-5 flex flex-col gap-5 ">
+            <div className="flex justify-end">
+                <Button variant="contained" size="large"
+                    startIcon={<AddIcon />}
+                    style={{ backgroundColor: 'green' }}
+                    onClick={handleDialogOpen}
+                >
+                    New Contact
+                </Button>
+            </div>
+
             {
-                loading ?
-                    <div className=''>
-                         <SkeletonTable headCells={headCells} />
+                loading ? (
+                    <SkeletonTable headCells={headCells} />
+                ) : !allContacts ? (
+                    <div className="flex-center flex-col h-full text-4xl font-bold">
+                        No Contacts Data Found...!
                     </div>
-                    :
+                ) : (
                     <DataTable rows={rows} headCells={headCells} />
+                )
             }
 
+
+            {/* Contact Form Dialog */}
+            {
+                isDialogOpen &&
+                <ContactFormDialog
+                    open={isDialogOpen}
+                    onClose={handleDialogClose}
+                    onSubmit={handleFormSubmit}
+                />
+            }
         </div>
     )
 }
