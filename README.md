@@ -1,5 +1,5 @@
 
-# Contact Management 🛒
+# Contact Management ☎️
 
 A full-stack Contact Management System designed for effortless management of contact information.
 This robust application offers features like CRUD operations, authentication, role-based access, and
