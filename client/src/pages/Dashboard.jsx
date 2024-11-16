@@ -18,11 +18,7 @@ const Dashboard = () => {
     const handleDialogOpen = () => setIsDialogOpen(true);
     const handleDialogClose = () => setIsDialogOpen(false);
 
-    const handleFormSubmit = (newContact) => {
-        console.log("New Contact:", newContact);
-
-        setIsDialogOpen(false);
-    };
+  
 
 
 
@@ -102,7 +98,6 @@ const Dashboard = () => {
                 <ContactFormDialog
                     open={isDialogOpen}
                     onClose={handleDialogClose}
-                    onSubmit={handleFormSubmit}
                 />
             }
         </div>
