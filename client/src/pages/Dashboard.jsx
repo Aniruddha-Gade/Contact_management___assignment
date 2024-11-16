@@ -1,8 +1,11 @@
 
 const Dashboard = () => {
+
+    
+
     return (
-        <div>
-            This is Dashboard Page
+        <div className="w-full h-full p-5">
+
         </div>
     )
 }
