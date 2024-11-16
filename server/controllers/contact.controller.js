@@ -136,7 +136,7 @@ export const deleteContact = async (req, res) => {
 
         // return success response
         res.status(200).json({
-            successs: true,
+            success: true,
             message: 'Contact deleted successsfully'
         });
     } catch (error) {
