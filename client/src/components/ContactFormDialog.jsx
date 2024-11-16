@@ -9,7 +9,7 @@ import { toast } from "sonner";
 
 const ContactFormDialog = ({ open, onClose, initialValues = null }) => {
   const [formValues, setFormValues] = useState(initialValues);
-  const { CREATE_NEW_CONTACT_API } = ContactEndpoints
+  const { CREATE_NEW_CONTACT_API, UPDATE_CONTACT_API } = ContactEndpoints
   const [loading, setLoading] = useState(false)
 
 
@@ -25,13 +25,25 @@ const ContactFormDialog = ({ open, onClose, initialValues = null }) => {
   const handleFormSubmit = async () => {
     // edit contact
     if (initialValues) {
-      console.log("edit")
+      setLoading(true)
+      const response = await apiConnector(
+        "PUT",
+        `${UPDATE_CONTACT_API}/${formValues?.id}`, 
+        formValues,
+      );
+
+      setLoading(false)
+      console.log("UPDATE_CONTACT API RESPONSE............", response)
+      if (response?.data?.success) {
+        toast.success("Conatact updated Succesfully")
+        onClose()
+      }
     } else {
       // create new contact
       setLoading(true)
-      const response = await apiConnector("POST", CREATE_NEW_CONTACT_API, formValues, {
-      })
+      const response = await apiConnector("POST", CREATE_NEW_CONTACT_API, formValues)
       setLoading(false)
+      
       console.log("CREATE_NEW_CONTACT API RESPONSE............", response)
       if (response?.data?.success) {
         toast.success("New Conatact Added Succesfully")

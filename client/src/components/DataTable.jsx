@@ -1,6 +1,5 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -13,6 +12,10 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import Paper from '@mui/material/Paper';
 import Checkbox from '@mui/material/Checkbox';
 import { visuallyHidden } from '@mui/utils';
+import EditIcon from '@mui/icons-material/Edit';
+import { Button } from '@mui/material';
+import ContactFormDialog from './ContactFormDialog';
+
 
 function EnhancedTableHead(props) {
   const { headCells, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
@@ -75,6 +78,10 @@ export default function DataTable({ rows, headCells }) {
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [isDialogOpen, setIsDialogOpen] = React.useState(false);
+  const handleDialogClose = () => setIsDialogOpen(false);
+  const [selectedIndex, setSelectedIndex] = React.useState(null)
+
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -169,6 +176,16 @@ export default function DataTable({ rows, headCells }) {
                         }}
                       />
                     </TableCell>
+                    {/* edit button */}
+                    <TableCell padding="checkbox">
+                      <Button onClick={() => {
+                        setSelectedIndex(index)
+                        setIsDialogOpen(true)
+                      }}>
+                        <EditIcon />
+                      </Button>
+                    </TableCell>
+
                     {headCells.map((headCell) => (
                       <TableCell key={headCell.id} align={headCell.numeric ? 'right' : 'left'}>
                         {row[headCell.id]}
@@ -195,6 +212,16 @@ export default function DataTable({ rows, headCells }) {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
+
+
+      {
+        isDialogOpen &&
+        <ContactFormDialog
+          open={isDialogOpen}
+          onClose={handleDialogClose}
+          initialValues={rows[selectedIndex]}
+        />
+      }
     </Box>
   );
 }
