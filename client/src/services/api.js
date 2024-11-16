@@ -3,7 +3,7 @@ const BASE_URL = import.meta.env.VITE_APP_BASE_URL;
 
 
 // CONTACTS ENDPOINTS
-export const endpoints = {
+export const ContactEndpoints = {
     CREATE_NEW_CONTACT_API: BASE_URL + "/contact/contacts",
     GET_ALL_CONTACTS_API: BASE_URL + "/contact/contacts",
     UPDATE_CONTACT_API: BASE_URL + "/contact/contacts",
