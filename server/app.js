@@ -13,7 +13,7 @@ app.use(express.json()); // to parse json body
 // cors => cors
 app.use(
     cors({
-        origin: ["http://localhost:5173"],
+        origin: ["http://localhost:5173", "https://contact-management-table.vercel.app/"],
         credentials: true
     })
 );
