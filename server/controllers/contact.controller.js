@@ -14,7 +14,7 @@ export const createContact = async (req, res) => {
         // validate data
         if (!firstName || !lastName || !email || !phoneNumber || !company || !jobTitle) {
             return res.status(400).json({
-                succes: false,
+                success: false,
                 message: "firstName, lastName, email, phoneNumber, company, jobTitle all fields are required",
             });
         }
@@ -27,14 +27,14 @@ export const createContact = async (req, res) => {
 
         // return success message
         res.status(201).json({
-            succes: true,
-            message: "New Contact created successfully",
+            success: true,
+            message: "New Contact created successsfully",
             contact
         });
     } catch (error) {
         console.log("Error while creating new contact => ", error)
         res.status(400).json({
-            succes: false,
+            success: false,
             message: 'Error while creating new contact',
             error: error.message
         });
@@ -52,14 +52,14 @@ export const getAllContacts = async (req, res) => {
 
         // return success message
         res.status(201).json({
-            succes: true,
-            message: "All Contacts fetched successfully",
+            success: true,
+            message: "All Contacts fetched successsfully",
             contacts
         });
     } catch (error) {
         console.log("Error while fetching all contacts => ", error)
         res.status(500).json({
-            succes: false,
+            success: false,
             message: 'Error while fetching all contacts',
             error: error.message
         });
@@ -91,20 +91,20 @@ export const updateContact = async (req, res) => {
 
         // if contact not found in DB
         if (!contact) return res.status(404).json({
-            succes: true,
+            success: true,
             message: 'Contact not found by ID',
         });
 
         // return success response
         res.status(200).json({
-            succes: true,
-            message: "Conatct updated successfully",
+            success: true,
+            message: "Conatct updated successsfully",
             contact
         });
     } catch (error) {
         console.log("Error while updating contact by Id => ", error)
         res.status(500).json({
-            succes: false,
+            success: false,
             message: 'Error while updating contact by Id',
             error: error.message
         });
@@ -121,7 +121,7 @@ export const deleteContact = async (req, res) => {
         // validate data
         if (!id) {
             return res.status(400).json({
-                success: false,
+                successs: false,
                 message: "conatct ID is required to delete contact",
             });
         }
@@ -136,13 +136,13 @@ export const deleteContact = async (req, res) => {
 
         // return success response
         res.status(200).json({
-            success: true,
-            message: 'Contact deleted successfully'
+            successs: true,
+            message: 'Contact deleted successsfully'
         });
     } catch (error) {
         console.log("Error while deleting contact by ID => ", error)
         res.status(500).json({
-            succes: false,
+            success: false,
             message: 'Error while deleting contact by ID',
             error: error.message
         });
