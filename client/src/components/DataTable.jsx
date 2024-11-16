@@ -44,7 +44,7 @@ function EnhancedTableHead(props) {
         </TableCell>
         <TableCell>Edit</TableCell>
         <TableCell>Delete</TableCell>
-        
+
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
@@ -263,40 +263,40 @@ export default function DataTable({ rows, headCells }) {
       {
         openDeleteDialog && (
           <Dialog open={openDeleteDialog} onClose={() => setOpenDeleteDialog(false)} fullWidth>
-  <DialogTitle>Delete Contact Confirmation</DialogTitle>
-  <DialogContent style={{ padding: "20px" }}>
-    <Typography variant="body1" gutterBottom>
-      Are you sure you want to delete this contact? This action cannot be undone.
-    </Typography>
-    <Typography variant="body2" color="textSecondary" gutterBottom>
-      Deleting this contact will permanently remove it from your records and you won't be able to recover the data.
-    </Typography>
-    <Grid2 container spacing={2} justifyContent="flex-end" style={{ marginTop: "20px" }}>
-      <Grid2 item>
-        <Button
-          onClick={() => setOpenDeleteDialog(false)}
-          disabled={loading}
-          variant="outlined"
-          color="success"
-          startIcon={<DoDisturbAltIcon />}
-        >
-          Cancel
-        </Button>
-      </Grid2>
-      <Grid2 item>
-        <Button
-          onClick={handleContactDelete}
-          disabled={loading}
-          variant="contained"
-          color="error"
-          startIcon={<DeleteIcon />}
-        >
-          {loading ? 'Deleting...' : 'Delete'}
-        </Button>
-      </Grid2>
-    </Grid2>
-  </DialogContent>
-</Dialog>
+            <DialogTitle>Delete Contact Confirmation</DialogTitle>
+            <DialogContent style={{ padding: "20px" }}>
+              <Typography variant="body1" gutterBottom>
+                Are you sure you want to delete this contact? This action cannot be undone.
+              </Typography>
+              <Typography variant="body2" color="textSecondary" gutterBottom>
+                Deleting this contact will permanently remove it from your records and you won&apos;t be able to recover the data.
+              </Typography>
+              <Grid2 container spacing={2} justifyContent="flex-end" style={{ marginTop: "20px" }}>
+                <Grid2 item>
+                  <Button
+                    onClick={() => setOpenDeleteDialog(false)}
+                    disabled={loading}
+                    variant="outlined"
+                    color="success"
+                    startIcon={<DoDisturbAltIcon />}
+                  >
+                    Cancel
+                  </Button>
+                </Grid2>
+                <Grid2 item>
+                  <Button
+                    onClick={handleContactDelete}
+                    disabled={loading}
+                    variant="contained"
+                    color="error"
+                    startIcon={<DeleteIcon />}
+                  >
+                    {loading ? 'Deleting...' : 'Delete'}
+                  </Button>
+                </Grid2>
+              </Grid2>
+            </DialogContent>
+          </Dialog>
 
         )}
     </Box>

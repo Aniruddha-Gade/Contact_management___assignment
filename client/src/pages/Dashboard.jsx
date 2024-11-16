@@ -28,7 +28,7 @@ const Dashboard = () => {
         { id: 'lastName', numeric: false, disablePadding: false, label: 'Last Name' },
         { id: 'email', numeric: false, disablePadding: false, label: 'Email' },
         { id: 'phoneNumber', numeric: true, disablePadding: false, label: 'Phone Number' },
-        { id: 'company', numeric: false, disablePadding: false, label: 'company' },
+        { id: 'company', numeric: false, disablePadding: false, label: 'Company' },
         { id: 'jobTitle', numeric: false, disablePadding: false, label: 'Job Title' },
     ];
 
@@ -69,6 +69,9 @@ const Dashboard = () => {
 
     return (
         <div className="w-full h-full p-5 flex flex-col gap-5 ">
+          <h1 className="text-5xl text-center sm:text-left font-bold text-green-600 font-Boogaloo">
+            Manage Contacts
+          </h1>
             <div className="flex justify-end">
                 <Button variant="contained" size="large"
                     startIcon={<AddIcon />}
