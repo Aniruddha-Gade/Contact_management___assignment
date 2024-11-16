@@ -6,7 +6,7 @@ This robust application offers features like CRUD operations, authentication, ro
 intuitive UI/UX for seamless interaction.
  
  <br/>
- Built with the latest technologies such as React.js, Tailwind CSS, Express.js and MongoDB, 
+ Built with React.js, Tailwind CSS, Express.js and MongoDB, 
  it offers a seamless user experience.
 
 <hr/>
