@@ -1,13 +1,26 @@
+import { Route, Routes, } from "react-router-dom";
+import Dashboard from "./pages/Dashboard"
+import Home from "./pages/Home"
 
 
 function App() {
 
   return (
-   <div>
-    <h1 class="text-3xl text-red-600 text-center font-bold underline">
-    Hello world!
-  </h1> 
-   </div>
+    <div className='h-screen w-screen flex '>
+
+
+
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path='/dashboard' element={<Dashboard />} />
+      </Routes>
+
+
+
+
+
+    </div>
   )
 }
 
