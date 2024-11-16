@@ -16,7 +16,7 @@ intuitive UI/UX for seamless interaction.
 
 
 <h2>
-Postman Collection 📬 : [  ]
+Postman Collection 📬 : [ https://documenter.getpostman.com/view/29064533/2sAYBPmEad ]
 </h2>
 
 <h2>
