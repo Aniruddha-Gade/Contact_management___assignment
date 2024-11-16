@@ -2,6 +2,8 @@ import { useEffect, useState } from "react"
 import { ContactEndpoints } from "../services/api"
 import { apiConnector } from "../services/apiConnector"
 import DataTable from "../components/DataTable"
+import { Skeleton } from "@mui/material"
+import SkeletonTable from "../components/loader/SkeletonTable"
 
 
 
@@ -17,9 +19,9 @@ const Dashboard = () => {
         { id: 'firstName', numeric: false, disablePadding: true, label: 'First Name' },
         { id: 'lastName', numeric: false, disablePadding: false, label: 'Last Name' },
         { id: 'email', numeric: false, disablePadding: false, label: 'Email' },
-        { id: 'phoneNumber', numeric: true, disablePadding: false, label: 'phoneNumber' },
+        { id: 'phoneNumber', numeric: true, disablePadding: false, label: 'Phone Number' },
         { id: 'company', numeric: false, disablePadding: false, label: 'company' },
-        { id: 'jobTitle', numeric: false, disablePadding: false, label: 'jobTitle' },
+        { id: 'jobTitle', numeric: false, disablePadding: false, label: 'Job Title' },
     ];
 
 
@@ -61,8 +63,8 @@ const Dashboard = () => {
         <div className="w-full h-full p-5">
             {
                 loading ?
-                    <div className='text-5xl text-green-600'>
-                        loading
+                    <div className=''>
+                         <SkeletonTable headCells={headCells} />
                     </div>
                     :
                     <DataTable rows={rows} headCells={headCells} />
