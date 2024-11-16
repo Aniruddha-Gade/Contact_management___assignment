@@ -23,8 +23,6 @@ const Dashboard = () => {
 
 
     const headCells = [
-        // { id: 'edit', numeric: false, disablePadding: false, label: 'Edit' },
-        // { id: 'delete', numeric: false, disablePadding: false, label: 'Delete' },
         { id: 'id', numeric: false, disablePadding: true, label: 'ID' },
         { id: 'firstName', numeric: false, disablePadding: false, label: 'First Name' },
         { id: 'lastName', numeric: false, disablePadding: false, label: 'Last Name' },
@@ -84,7 +82,7 @@ const Dashboard = () => {
             {
                 loading ? (
                     <SkeletonTable headCells={headCells} />
-                ) : !allContacts ? (
+                ) : allContacts.length === 0 ? (
                     <div className="flex-center flex-col h-full text-4xl font-bold">
                         No Contacts Data Found...!
                     </div>
