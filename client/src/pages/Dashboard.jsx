@@ -23,8 +23,10 @@ const Dashboard = () => {
 
 
     const headCells = [
+        { id: 'edit', numeric: false, disablePadding: false, label: 'Edit' },
+        { id: 'delete', numeric: false, disablePadding: false, label: 'Delete' },
         { id: 'id', numeric: false, disablePadding: true, label: 'ID' },
-        { id: 'firstName', numeric: false, disablePadding: true, label: 'First Name' },
+        { id: 'firstName', numeric: false, disablePadding: false, label: 'First Name' },
         { id: 'lastName', numeric: false, disablePadding: false, label: 'Last Name' },
         { id: 'email', numeric: false, disablePadding: false, label: 'Email' },
         { id: 'phoneNumber', numeric: true, disablePadding: false, label: 'Phone Number' },

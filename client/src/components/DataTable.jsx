@@ -182,7 +182,6 @@ export default function DataTable({ rows, headCells }) {
               {visibleRows.map((row, index) => {
                 const isItemSelected = selected.includes(row.id || row._id);
                 const labelId = `enhanced-table-checkbox-${index}`;
-
                 return (
                   <TableRow
                     hover
@@ -203,7 +202,7 @@ export default function DataTable({ rows, headCells }) {
                       />
                     </TableCell>
                     {/* edit button */}
-                    <TableCell padding="checkbox">
+                    <TableCell >
                       <Button onClick={() => {
                         setSelectedIndex(index)
                         setIsDialogOpen(true)
@@ -212,7 +211,7 @@ export default function DataTable({ rows, headCells }) {
                       </Button>
                     </TableCell>
                     {/* delete button */}
-                    <TableCell padding="checkbox">
+                    <TableCell >
                       <Button onClick={() => {
                         setSelectedIndex(index)
                         setOpenDeleteDialog(true)
@@ -250,14 +249,12 @@ export default function DataTable({ rows, headCells }) {
       </Paper>
 
 
-      {
-        isDialogOpen &&
+      {isDialogOpen &&
         <ContactFormDialog
           open={isDialogOpen}
           onClose={handleDialogClose}
           initialValues={rows[selectedIndex]}
-        />
-      }
+        />}
 
 
       {
@@ -281,13 +278,9 @@ export default function DataTable({ rows, headCells }) {
                   {loading ? 'Deleting' : 'Delete'}
                 </Button>
               </Grid2>
-
-
-
             </DialogContent>
           </Dialog>
-        )
-      }
+        )}
     </Box>
   );
 }
