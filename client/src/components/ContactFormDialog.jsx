@@ -20,39 +20,71 @@ const ContactFormDialog = ({ open, onClose, initialValues = null }) => {
     });
   };
 
-  // handle Submit
-  const handleFormSubmit = async () => {
-    // edit contact
-    if (initialValues) {
-      setLoading(true)
-      const response = await apiConnector(
-        "PUT",
-        `${UPDATE_CONTACT_API}/${formValues?.id}`,
-        formValues,
-      );
 
-      setLoading(false)
-      console.log("UPDATE_CONTACT API RESPONSE............", response)
-      if (response?.data?.success) {
-        toast.success("Contact updated Succesfully")
-        onClose()
-      }
-      else {
-        toast.error(response.data?.message)
-      }
-    } else {
-      // create new contact
-      setLoading(true)
-      const response = await apiConnector("POST", CREATE_NEW_CONTACT_API, formValues)
-      setLoading(false)
+  // validate Form Details
+  const validateFormDetails = () => {
+    const requiredFields = [
+      { field: "firstName", message: "First name is required" },
+      { field: "lastName", message: "Last name is required" },
+      { field: "email", message: "Email is required" },
+      { field: "phoneNumber", message: "Phone Number is required" },
+      { field: "company", message: "Company name is required" },
+      { field: "jobTitle", message: "Job Title is required" },
+    ];
 
-      console.log("CREATE_NEW_CONTACT API RESPONSE............", response)
-      if (response?.data?.success) {
-        toast.success("New Conatact Added Succesfully")
-        onClose()
+    for (const { field, message } of requiredFields) {
+      if (!formValues[field]) {
+        toast.error(message);
+        return false;
       }
     }
+
+    return true;
+  }
+
+  // check whether user has changed contact info 
+  const hasFormChanged = () => {
+    return Object.keys(initialValues || {}).some(
+      (key) => formValues[key] !== initialValues[key]
+    );
   };
+
+  // handle Form Submit
+  const handleFormSubmit = async () => {
+    if (!validateFormDetails()) return;
+
+    const isEdit = Boolean(initialValues);
+
+    if (isEdit && !hasFormChanged()) {
+      toast.error("No changes detected. Please update the information before saving.");
+      return;
+    }
+
+    const apiEndpoint = isEdit
+      ? `${UPDATE_CONTACT_API}/${formValues?.id}` : CREATE_NEW_CONTACT_API;
+    const apiMethod = isEdit ? "PUT" : "POST";
+    const successMessage = isEdit
+      ? "Contact updated successfully"
+      : "New contact added successfully";
+
+    try {
+      setLoading(true);
+      const response = await apiConnector(apiMethod, apiEndpoint, formValues);
+      setLoading(false);
+
+      if (response?.data?.success) {
+        toast.success(successMessage);
+      } else {
+        toast.error(response?.data?.message || "Something went wrong");
+      }
+    } catch (error) {
+      console.log("Error = ", error)
+      setLoading(false);
+      toast.error("An error occurred. Please try again.");
+    }
+    onClose();
+  };
+
 
   // console.log("initialValues= ", initialValues)
   // console.log("formValues = ", formValues)
