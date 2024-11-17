@@ -23,6 +23,11 @@ const ContactFormDialog = ({ open, onClose, initialValues = null }) => {
 
   // validate Form Details
   const validateFormDetails = () => {
+    if (!formValues) {
+      toast.error("Form values are not initialized.");
+      return false;
+    }
+
     const requiredFields = [
       { field: "firstName", message: "First name is required" },
       { field: "lastName", message: "Last name is required" },
@@ -52,7 +57,7 @@ const ContactFormDialog = ({ open, onClose, initialValues = null }) => {
   // handle Form Submit
   const handleFormSubmit = async () => {
     if (!validateFormDetails()) return;
-
+    console.log("creating new")
     const isEdit = Boolean(initialValues);
 
     if (isEdit && !hasFormChanged()) {
